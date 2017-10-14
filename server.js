@@ -1,7 +1,6 @@
 
 var mysql = require('mysql')
 var express = require('express');
-var setGet = require('./server_setGet');
 var app = express();
 var url = require('url');
 
@@ -25,7 +24,7 @@ function getStats(callback)
 
 
 app.get('/getStats', function (req, res) {
-	console.log("he wants to GET");
+	console.log("Incoming request to GET data");
     
 	  	getStats(function(err,data){
 	        if (err) {
@@ -52,7 +51,7 @@ function setStats(temperature,humidity,date,callback)
 
 app.post('/setStats', function (req, res) {
 	var qData = url.parse(req.originalUrl,true).query;
-	console.log(`he wants to SET, date: ${qData.date}`);
+	console.log("Incoming request to SET data");
 	setStats(qData.temperature,qData.humidity,qData.date,function(err){
 	        if (err) {
 	            console.log("ERROR : Insertion failed.");            
