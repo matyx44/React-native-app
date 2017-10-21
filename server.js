@@ -24,16 +24,17 @@ function getStats(callback)
 
 
 app.get('/getStats', function (req, res) {
+	console.log('\x1b[1m\x1b[32m%s\x1b[0m', '################################################################');
 	console.log("Incoming request to GET data");
     
 	  	getStats(function(err,data){
 	        if (err) {
 	            console.log("ERROR : ",err);            
 	        } else {            
-	            console.log("result from db is : ",data[0], data.length);   
+	            console.log("Number of results from db : ", data.length);   
 	            res.end(JSON.stringify(data));
 	        }    
-		});
+		});		
 })
 
 function setStats(temperature,humidity,date,callback)
@@ -50,6 +51,7 @@ function setStats(temperature,humidity,date,callback)
 }
 
 app.post('/setStats', function (req, res) {
+	console.log('\x1b[1m\x1b[32m%s\x1b[0m', '################################################################');
 	var qData = url.parse(req.originalUrl,true).query;
 	console.log("Incoming request to SET data");
 	setStats(qData.temperature,qData.humidity,qData.date,function(err){
