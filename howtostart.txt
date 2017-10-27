@@ -1,0 +1,3 @@
+"mysql -u root -p"
+"node server" v React Native App
+"npm start" v ReactApp
