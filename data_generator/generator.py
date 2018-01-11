@@ -1,9 +1,17 @@
 import requests;
 import json;
 import threading;
+import datetime;
+import time;
+from random import randint;
+from random import uniform;
 
 def postData():
-    post_data = {'temperature':'30','humidity':'0.1239','date':'2017-09-10 19:02:23'}
+    ts = time.time()+3600
+    dt = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+    temp = randint(25,35);
+    humidity = uniform(0.1, 0.3);
+    post_data = {'temperature':temp,'humidity':humidity,'date':dt}
     set_response = (requests.post(url='http://localhost:8080/setStats', params=post_data))
     if(set_response.status_code >= 200 and set_response.status_code < 300):
         print("Connection successful.")

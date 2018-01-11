@@ -22,7 +22,6 @@ function getStats(callback)
     });
 }
 
-
 app.get('/getStats', function (req, res) {
 	console.log('\x1b[1m\x1b[32m%s\x1b[0m', '################################################################');
 	console.log("Incoming request to GET data");
@@ -36,6 +35,35 @@ app.get('/getStats', function (req, res) {
 	        }    
 		});		
 })
+
+function getCurrentStats(callback){
+	connection.query("SELECT date,temperature,humidity FROM statistics ORDER BY date DESC LIMIT 1", function (err, result, fields) 
+    {
+        if (err) 
+            callback(err,null);
+        else
+            callback(null,result);
+    });
+}
+
+app.get('/getCurrentStats', function (req, res) {
+	console.log('\x1b[1m\x1b[32m%s\x1b[0m', '################################################################');
+	console.log("Incoming request to GET data");
+    
+	  	getCurrentStats(function(err,data){
+	        if (err) {
+	            console.log("ERROR : ",err);            
+	        } else {            
+	            console.log("Number of results from db : ", data.length);   
+	            res.end(JSON.stringify(data));
+	        }    
+		});		
+})
+
+
+
+
+
 
 function setStats(temperature,humidity,date,callback)
 {
