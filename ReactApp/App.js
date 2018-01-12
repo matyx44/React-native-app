@@ -36,6 +36,22 @@ class HomeScreen extends React.Component {
   }
 }
 
+class Graph extends React.Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: `Graf ${navigation.state.params.type}`,
+     headerStyle: { marginTop: StatusBar.currentHeight },
+  });
+      
+  render() {
+  	 const { navigate } = this.props.navigation;  
+    return (
+    	<View style={styles.container}>
+			<Text style={styles.menuItem}> TBD </Text>
+      </View>
+    );
+  }
+}
+
  class Statistics extends React.Component {
 
  	static navigationOptions = {
@@ -80,8 +96,8 @@ class HomeScreen extends React.Component {
 	}
 
 	  render() {
-	    return (   
-	    	
+	  	const { navigate } = this.props.navigation;  
+	    return (   	    	 
 	      <View style={styles.container}>
 	         <View style={styles.containerData}>
 	         		 <FlatList
@@ -95,7 +111,16 @@ class HomeScreen extends React.Component {
 			            {key: this.state.temperature },
 			            {key: this.state.humidity },
 			          ]}
-			          renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
+			          renderItem={({item}) => 
+			          <TouchableHighlight
+				         style={styles.statsButton}
+				         onPress={() =>
+   				          navigate('Graph',{ type: item.key.split(" ")[0]})}
+				        >
+				         <Text style={styles.item}>{item.key}</Text>
+				        </TouchableHighlight>
+			          
+			      	}
 			        />
 		     </View>
 		     <View style={styles.containerFooter}>
@@ -115,7 +140,7 @@ class Options extends React.Component {
   	 const { navigate } = this.props.navigation;  
     return (
       <View style={styles.container}>
-      <Text style={styles.item}>Here will be some options</Text>
+      <Text style={styles.item}>TBD</Text>
       </View>
     );
   }
@@ -125,6 +150,7 @@ const RootNavigator = StackNavigator({
 	Home: {screen:HomeScreen},
 	Statistics:{screen:Statistics},
 	Options:{screen:Options},
+	Graph:{screen:Graph}
 });
 
 
@@ -168,8 +194,8 @@ const styles = StyleSheet.create({
   	marginTop:100,
   },
   containerData:{
-  	justifyContent: 'center',
-  	alignItems:'center',
+  	justifyContent: 'space-between',
+  	alignItems:'stretch',
   	flex:0.8,
   },
   containerFooter:{
@@ -194,6 +220,14 @@ const styles = StyleSheet.create({
     marginBottom:30,
     color:'white',
     fontWeight:'bold',
+  },
+
+  statsButton:{
+  	alignItems:'center', 
+  	backgroundColor: '#4e5555',	
+  	//borderWidth:2,
+  	//borderColor:'white',
+  	marginTop:20,
   },
 });
 
